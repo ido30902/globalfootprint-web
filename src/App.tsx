@@ -4,12 +4,14 @@ import { SearchBar } from './components/SearchBar';
 import { BrandInfo } from './components/BrandInfo';
 import { BrandMeter } from './components/BrandMeter';
 import { CountryInfo } from './components/CountryInfo';
+import { AdBanner } from './components/AdBanner';
 import type { Brand, Country } from './types';
 import './App.css';
 
 function App() {
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [showAdBanner, setShowAdBanner] = useState(true);
 
   const handleBrandSelect = (brand: Brand | null) => {
     setSelectedBrand(brand);
@@ -36,6 +38,11 @@ function App() {
   // Handler to close CountryInfo
   const handleCloseCountryInfo = () => {
     setSelectedCountry(null);
+  };
+
+  // Handler to dismiss ad banner
+  const handleDismissAdBanner = () => {
+    setShowAdBanner(false);
   };
 
   return (
@@ -86,6 +93,17 @@ function App() {
         onBrandSelect={handleBrandSelect}
         onCountrySelect={handleCountrySelectFromMeter}
       />
+
+      {/* Ad Banner - positioned at bottom center */}
+      {showAdBanner && (
+        <AdBanner
+          onDismiss={handleDismissAdBanner}
+          dismissible={true}
+          adClient="ca-pub-1234567890123456" // Replace with your actual Google AdSense client ID
+          adSlot="1234567890" // Replace with your actual ad slot ID
+          adFormat="auto"
+        />
+      )}
     </div>
   );
 }
